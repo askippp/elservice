@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -26,6 +27,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $total_harga
  * @property string $status_bayar
  * @property string|null $tipe_pembayaran
+ * 
+ * @property Alat $alat
+ * @property Cabang $cabang
+ * @property Customer $customer
+ * @property Operator $operator
+ * @property Teknisi $teknisi
+ * @property Collection|Pemasukan[] $pemasukans
+ * @property Collection|Pengeluaran[] $pengeluarans
+ * @property Collection|Sparepart[] $spareparts
  *
  * @package App\Models
  */
@@ -60,4 +70,45 @@ class Service extends Model
 		'status_bayar',
 		'tipe_pembayaran'
 	];
+
+	public function alat()
+	{
+		return $this->belongsTo(Alat::class, 'id_alat');
+	}
+
+	public function cabang()
+	{
+		return $this->belongsTo(Cabang::class, 'id_cabang');
+	}
+
+	public function customer()
+	{
+		return $this->belongsTo(Customer::class, 'id_customer');
+	}
+
+	public function operator()
+	{
+		return $this->belongsTo(Operator::class, 'id_operator');
+	}
+
+	public function teknisi()
+	{
+		return $this->belongsTo(Teknisi::class, 'id_teknisi');
+	}
+
+	public function pemasukans()
+	{
+		return $this->hasMany(Pemasukan::class, 'id_service');
+	}
+
+	public function pengeluarans()
+	{
+		return $this->hasMany(Pengeluaran::class, 'id_service');
+	}
+
+	public function spareparts()
+	{
+		return $this->belongsToMany(Sparepart::class, 'sparepart_service', 'id_service', 'id_sparepart')
+					->withPivot('id', 'jumlah', 'subtotal');
+	}
 }

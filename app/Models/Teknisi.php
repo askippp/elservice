@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property Cabang $cabang
  * @property User $user
+ * @property Collection|DiagnosaService[] $diagnosa_services
+ * @property Collection|Service[] $services
  *
  * @package App\Models
  */
@@ -51,5 +54,15 @@ class Teknisi extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'id_user');
+	}
+
+	public function diagnosa_services()
+	{
+		return $this->hasMany(DiagnosaService::class, 'id_teknisi');
+	}
+
+	public function services()
+	{
+		return $this->hasMany(Service::class, 'id_teknisi');
 	}
 }

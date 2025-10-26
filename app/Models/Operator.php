@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,6 +24,9 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property Cabang $cabang
  * @property User $user
+ * @property Collection|Customer[] $customers
+ * @property Collection|Pengeluaran[] $pengeluarans
+ * @property Collection|Service[] $services
  *
  * @package App\Models
  */
@@ -51,5 +55,20 @@ class Operator extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'id_user');
+	}
+
+	public function customers()
+	{
+		return $this->hasMany(Customer::class, 'id_operator');
+	}
+
+	public function pengeluarans()
+	{
+		return $this->hasMany(Pengeluaran::class, 'id_operator');
+	}
+
+	public function services()
+	{
+		return $this->hasMany(Service::class, 'id_operator');
 	}
 }

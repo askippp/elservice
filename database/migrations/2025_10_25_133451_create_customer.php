@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('email');
             $table->integer('no_telp');
             $table->string('alamat');
-            $table->integer('id_operator')->constrained('operator')
+            $table->foreignId('id_operator')->constrained('operator')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->integer('id_cabang')->constrained('cabang')
+            $table->foreignId('id_cabang')->constrained('cabang')
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

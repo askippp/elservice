@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $id_sparepart
  * @property int $id_cabang
+ * 
+ * @property Cabang $cabang
+ * @property Sparepart $sparepart
  *
  * @package App\Models
  */
@@ -31,4 +34,14 @@ class SparepartCabang extends Model
 		'id_sparepart',
 		'id_cabang'
 	];
+
+	public function cabang()
+	{
+		return $this->belongsTo(Cabang::class, 'id_cabang');
+	}
+
+	public function sparepart()
+	{
+		return $this->belongsTo(Sparepart::class, 'id_sparepart');
+	}
 }

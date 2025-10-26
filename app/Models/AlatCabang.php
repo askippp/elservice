@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $id_alat
  * @property int $id_cabang
+ * 
+ * @property Alat $alat
+ * @property Cabang $cabang
  *
  * @package App\Models
  */
@@ -31,4 +34,14 @@ class AlatCabang extends Model
 		'id_alat',
 		'id_cabang'
 	];
+
+	public function alat()
+	{
+		return $this->belongsTo(Alat::class, 'id_alat');
+	}
+
+	public function cabang()
+	{
+		return $this->belongsTo(Cabang::class, 'id_cabang');
+	}
 }

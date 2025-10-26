@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('pengeluaran', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_service')->constrained('service')
+            $table->foreignId('id_service')->constrained('service')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->integer('id_operator')->constrained('operator')
+            $table->foreignId('id_operator')->constrained('operator')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->integer('id_cabang')->constrained('cabang')
+            $table->foreignId('id_cabang')->constrained('cabang')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->integer('id_sparepart')->constrained('sparepart')->nullable()
+            $table->foreignId('id_sparepart')->constrained('sparepart')->nullable()
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->timestamp('tgl');
             $table->string('jenis');

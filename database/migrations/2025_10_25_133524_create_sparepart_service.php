@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('sparepart_service', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_service')->constrained('service')
+            $table->foreignId('id_service')->constrained('service')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->integer('id_sparepart')->constrained('sparepart')
+            $table->foreignId('id_sparepart')->constrained('sparepart')
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->integer('jumlah');
             $table->integer('subtotal');

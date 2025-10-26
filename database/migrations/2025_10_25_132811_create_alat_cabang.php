@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('alat_cabang', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_alat')->constrained('alat')
+            $table->foreignId('id_alat')->constrained('alat')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->integer('id_cabang')->constrained('cabang')
+            $table->foreignId('id_cabang')->constrained('cabang')
                 ->restrictOnDelete()->cascadeOnUpdate();
         });
     }

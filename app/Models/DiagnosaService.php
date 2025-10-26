@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $estimasi_biaya
  * @property int $id_teknisi
  * @property Carbon $tgl_diagnosa
+ * 
+ * @property Teknisi $teknisi
  *
  * @package App\Models
  */
@@ -43,4 +45,9 @@ class DiagnosaService extends Model
 		'id_teknisi',
 		'tgl_diagnosa'
 	];
+
+	public function teknisi()
+	{
+		return $this->belongsTo(Teknisi::class, 'id_teknisi');
+	}
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('diagnosa');
             $table->date('estimasi_waktu');
             $table->integer('estimasi_biaya');
-            $table->integer('id_teknisi')->constrained('teknisi')
+            $table->foreignId('id_teknisi')->constrained('teknisi')
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->timestamp('tgl_diagnosa');
         });

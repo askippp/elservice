@@ -18,6 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $tgl
  * @property string $sumber
  * @property int $jumlah
+ * 
+ * @property Cabang $cabang
+ * @property Service $service
  *
  * @package App\Models
  */
@@ -40,4 +43,14 @@ class Pemasukan extends Model
 		'sumber',
 		'jumlah'
 	];
+
+	public function cabang()
+	{
+		return $this->belongsTo(Cabang::class, 'id_cabang');
+	}
+
+	public function service()
+	{
+		return $this->belongsTo(Service::class, 'id_service');
+	}
 }

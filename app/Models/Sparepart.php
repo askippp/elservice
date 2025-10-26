@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -26,6 +27,9 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property Kategori $kategori
  * @property Merek $merek
+ * @property Collection|Pengeluaran[] $pengeluarans
+ * @property Collection|Cabang[] $cabangs
+ * @property Collection|Service[] $services
  *
  * @package App\Models
  */
@@ -60,5 +64,22 @@ class Sparepart extends Model
 	public function merek()
 	{
 		return $this->belongsTo(Merek::class, 'id_merek');
+	}
+
+	public function pengeluarans()
+	{
+		return $this->hasMany(Pengeluaran::class, 'id_sparepart');
+	}
+
+	public function cabangs()
+	{
+		return $this->belongsToMany(Cabang::class, 'sparepart_cabang', 'id_sparepart', 'id_cabang')
+					->withPivot('id');
+	}
+
+	public function services()
+	{
+		return $this->belongsToMany(Service::class, 'sparepart_service', 'id_sparepart', 'id_service')
+					->withPivot('id', 'jumlah', 'subtotal');
 	}
 }

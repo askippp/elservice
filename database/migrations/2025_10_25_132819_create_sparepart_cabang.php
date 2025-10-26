@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('sparepart_cabang', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_sparepart')->constrained('sparepart')
+            $table->foreignId('id_sparepart')->constrained('sparepart')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->integer('id_cabang')->constrained('cabang')
+            $table->foreignId('id_cabang')->constrained('cabang')
                 ->restrictOnDelete()->cascadeOnUpdate();
         });
     }

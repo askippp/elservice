@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property Kategori $kategori
  * @property Merek $merek
+ * @property Collection|Cabang[] $cabangs
+ * @property Collection|Service[] $services
  *
  * @package App\Models
  */
@@ -55,5 +58,16 @@ class Alat extends Model
 	public function merek()
 	{
 		return $this->belongsTo(Merek::class, 'id_merek');
+	}
+
+	public function cabangs()
+	{
+		return $this->belongsToMany(Cabang::class, 'alat_cabang', 'id_alat', 'id_cabang')
+					->withPivot('id');
+	}
+
+	public function services()
+	{
+		return $this->hasMany(Service::class, 'id_alat');
 	}
 }
