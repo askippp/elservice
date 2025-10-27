@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('no_telp');
             $table->string('nama_lengkap');
-            $table->foreignId('id_user')->constrained('user')
-                ->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreignId('id_user')->nullable()
+            ->constrained('user')
+            ->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_cabang')->constrained('cabang')
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->timestamps();
