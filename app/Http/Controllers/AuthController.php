@@ -58,6 +58,14 @@ class AuthController extends Controller
         ], 200);
     }
 
+    public function register(Request $request) 
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'no_telp' => 'required|integer|unique:',
+        ]);
+    }
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

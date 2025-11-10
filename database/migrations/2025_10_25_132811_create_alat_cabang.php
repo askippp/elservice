@@ -17,6 +17,9 @@ return new class extends Migration
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_cabang')->constrained('cabang')
                 ->restrictOnDelete()->cascadeOnUpdate();
+            $table->enum('ketersediaan', ['bisa_ditangani','tidak_bisa']);
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

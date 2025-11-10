@@ -13,18 +13,17 @@ return new class extends Migration
     {
         Schema::create('pengeluaran', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_service')->constrained('service')
-                ->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('id_operator')->constrained('operator')
-                ->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_cabang')->constrained('cabang')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('id_sparepart')->constrained('sparepart')->nullable()
+            $table->foreignId('id_teknisi')->constrained('teknisi')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->timestamp('tgl');
-            $table->string('jenis');
-            $table->string('keterangan');
-            $table->integer('jumlah');
+            $table->foreignId('id_sparepart')->constrained('sparepart')
+                ->restrictOnDelete()->cascadeOnUpdate();
+            $table->decimal('jumlah', 12, 2);
+            $table->text('keterangan')->nullable();
+            $table->dateTime('tanggal');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
@@ -33,6 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('penegluaran');
+        Schema::dropIfExists('pengeluaran');
     }
 };
+

@@ -21,16 +21,19 @@ return new class extends Migration
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_alat')->constrained('alat')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('id_cabang')->constrained('cabang')
-                ->restrictOnDelete()->cascadeOnUpdate();
-            $table->timestamp('tgl_service');
-            $table->string('keluhan');
-            $table->enum('status', ['selesai', 'belum selesai', 'menunggu', 'ditolak'])->default('menunggu');
-            $table->timestamp('tgl_selesai')->nullable();
-            $table->string('keterangan')->nullable();
-            $table->integer('total_harga')->nullable();
-            $table->enum('status_bayar', ['lunas', 'belum lunas'])->default('belum lunas');
-            $table->string('tipe_pembayaran')->nullable();
+            $table->enum('jenis_service', ['drop_off', 'on_site']);
+            $table->text('alamat_service')->nullable();
+            $table->text('keluhan');
+            $table->text('diagnosa')->nullable();
+            $table->decimal('biaya_service', 12, 2)->nullable();
+            $table->decimal('biaya_kunjungan', 12, 2)->nullable();
+            $table->decimal('total_biaya', 12, 2)->nullable();
+            $table->enum('status', ['menunggu','dalam_proses','selesai','batal'])->default('menunggu');
+            $table->dateTime('tanggal_masuk');
+            $table->dateTime('tanggal_selesai')->nullable();
+            $table->text('catatan')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
@@ -42,3 +45,4 @@ return new class extends Migration
         Schema::dropIfExists('service');
     }
 };
+

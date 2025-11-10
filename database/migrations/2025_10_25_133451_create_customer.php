@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('customer', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_customer');
-            $table->string('email');
-            $table->integer('no_telp');
-            $table->string('alamat');
-            $table->foreignId('id_operator')->constrained('operator')
+            $table->foreignId('id_user')->constrained('users')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('id_cabang')->constrained('cabang')
-                ->restrictOnDelete()->cascadeOnUpdate();
-            $table->timestamps();
+            $table->string('nama', 100);
+            $table->string('no_telp', 20);
+            $table->text('alamat');
+            $table->string('email', 100);
+            $table->text('foto')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

@@ -19,8 +19,8 @@ return new class extends Migration
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->string('nama_alat');
             $table->string('tipe_model');
-            $table->string('deskripsi');
-            $table->string('foto')->nullable();
+            $table->text('deskripsi')->nullable();
+            $table->text('foto')->nullable();
             $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->timestamps();
         });
@@ -34,3 +34,4 @@ return new class extends Migration
         Schema::dropIfExists('alat');
     }
 };
+

@@ -17,6 +17,9 @@ return new class extends Migration
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_cabang')->constrained('cabang')
                 ->restrictOnDelete()->cascadeOnUpdate();
+            $table->integer('stok');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

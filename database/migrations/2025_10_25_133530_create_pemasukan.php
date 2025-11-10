@@ -17,9 +17,11 @@ return new class extends Migration
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_cabang')->constrained('cabang')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->timestamp('tgl');
-            $table->string('sumber');
-            $table->integer('jumlah');
+            $table->decimal('jumlah', 12, 2);
+            $table->text('keterangan')->nullable();
+            $table->dateTime('tanggal');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

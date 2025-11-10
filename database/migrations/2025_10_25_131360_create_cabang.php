@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('cabang', function (Blueprint $table) {
             $table->id();
             $table->string('nama_cabang');
-            $table->integer('no_telp');
-            $table->string('alamat');
-            $table->string('kota');
-            $table->string('email');
-            $table->string('foto')->nullable();
-            $table->enum('status', ['aktif', 'non-aktif'])->default('aktif');
-            $table->timestamps();
+            $table->text('alamat');
+            $table->string('no_telp', 20);
+            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
+            $table->text('foto')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

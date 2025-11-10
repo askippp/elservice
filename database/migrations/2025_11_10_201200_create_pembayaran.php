@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('service_sparepart', function (Blueprint $table) {
+        Schema::create('pembayaran', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_service')->constrained('service')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('id_sparepart')->constrained('sparepart')
-                ->restrictOnDelete()->cascadeOnUpdate();
-            $table->integer('jumlah');
-            $table->decimal('harga_satuan', 12, 2);
-            $table->decimal('subtotal', 12, 2);
+            $table->enum('metode', ['cash', 'transfer', 'midtrans']);
+            $table->enum('status', ['pending', 'berhasil', 'gagal', 'refund'])->default('pending');
+            $table->string('midtrans_order_id', 255)->nullable();
+            $table->string('midtrans_transaction_id', 255)->nullable();
+            $table->string('midtrans_va_number', 100)->nullable();
+            $table->decimal('jumlah', 12, 2);
+            $table->dateTime('tanggal');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_sparepart');
+        Schema::dropIfExists('pembayaran');
     }
 };

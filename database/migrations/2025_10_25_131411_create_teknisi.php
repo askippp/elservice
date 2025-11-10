@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('teknisi', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
-            $table->string('no_telp');
-            $table->string('nama_lengkap');
-            $table->foreignId('id_user')->nullable()
-            ->constrained('user')
-            ->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreignId('id_user')->constrained('users')
+                ->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_cabang')->constrained('cabang')
                 ->restrictOnDelete()->cascadeOnUpdate();
+            $table->string('nama', 100);
+            $table->string('spesialisasi', 100);
+            $table->string('no_telp', 20);
+            $table->text('alamat');
+            $table->text('foto')->nullable();
             $table->timestamps();
         });
     }

@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_kategori')->constrained('kategori')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('id_merek')->constrained('merek')
-                ->restrictOnDelete()->cascadeOnUpdate();
             $table->string('nama_sparepart');
-            $table->string('satuan');
-            $table->integer('harga_beli');
-            $table->integer('harga_jual');
+            $table->string('merek', 100);
             $table->integer('stok');
-            $table->string('foto')->nullable();
-            $table->timestamps();
+            $table->decimal('harga_beli', 12, 2);
+            $table->decimal('harga_jual', 12, 2);
+            $table->text('deskripsi')->nullable();
+            $table->text('foto')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
@@ -35,3 +35,4 @@ return new class extends Migration
         Schema::dropIfExists('sparepart');
     }
 };
+

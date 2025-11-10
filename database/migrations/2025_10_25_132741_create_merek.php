@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('merek', function (Blueprint $table) {
             $table->id();
             $table->string('nama_merek');
+            $table->string('negara_asal', 100)->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
