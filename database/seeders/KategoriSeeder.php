@@ -3,16 +3,26 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Kategori;
+use Illuminate\Support\Facades\DB;
 
 class KategoriSeeder extends Seeder
 {
     public function run(): void
     {
-        Kategori::truncate();
-        Kategori::insert([
-            ['nama_kategori' => 'Elektronik'],
-            ['nama_kategori' => 'Mekanik'],
+        DB::table('kategori')->truncate();
+        DB::table('kategori')->insert([
+            [
+                'nama_kategori' => 'Elektronik',
+                'deskripsi' => 'Perangkat elektronik',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_kategori' => 'Mekanik',
+                'deskripsi' => 'Komponen mekanik',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

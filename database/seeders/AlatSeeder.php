@@ -11,12 +11,12 @@ class AlatSeeder extends Seeder
 {
     public function run(): void
     {
-        Alat::truncate();
+        \DB::table('alat')->truncate();
         $kategori = Kategori::first();
         $merek = Merek::first();
         if (!$kategori || !$merek) return;
 
-        Alat::insert([
+        \DB::table('alat')->insert([
             [
                 'id_kategori' => $kategori->id,
                 'id_merek' => $merek->id,
@@ -25,6 +25,8 @@ class AlatSeeder extends Seeder
                 'deskripsi' => 'Alat ukur listrik',
                 'foto' => null,
                 'status' => 'aktif',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

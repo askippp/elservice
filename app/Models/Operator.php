@@ -14,18 +14,18 @@ use Illuminate\Database\Eloquent\Model;
  * Class Operator
  * 
  * @property int $id
- * @property string $email
- * @property string $no_telp
- * @property string $nama_lengkap
  * @property int $id_user
  * @property int $id_cabang
+ * @property string $nama
+ * @property string $no_telp
+ * @property string $alamat
+ * @property string|null $foto
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Cabang $cabang
  * @property User $user
- * @property Collection|Customer[] $customers
- * @property Collection|Pengeluaran[] $pengeluarans
+ * @property Collection|RequestSparepart[] $request_spareparts
  * @property Collection|Service[] $services
  *
  * @package App\Models
@@ -40,11 +40,12 @@ class Operator extends Model
 	];
 
 	protected $fillable = [
-		'email',
-		'no_telp',
-		'nama_lengkap',
 		'id_user',
-		'id_cabang'
+		'id_cabang',
+		'nama',
+		'no_telp',
+		'alamat',
+		'foto'
 	];
 
 	public function cabang()
@@ -57,14 +58,9 @@ class Operator extends Model
 		return $this->belongsTo(User::class, 'id_user');
 	}
 
-	public function customers()
+	public function request_spareparts()
 	{
-		return $this->hasMany(Customer::class, 'id_operator');
-	}
-
-	public function pengeluarans()
-	{
-		return $this->hasMany(Pengeluaran::class, 'id_operator');
+		return $this->hasMany(RequestSparepart::class, 'id_operator');
 	}
 
 	public function services()

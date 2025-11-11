@@ -3,26 +3,25 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Customer;
-use App\Models\Operator;
-use App\Models\Cabang;
+use Illuminate\Support\Facades\DB;
 
 class CustomerSeeder extends Seeder
 {
     public function run(): void
     {
-        Customer::truncate();
-        $operator = Operator::first();
-        $cabang = Cabang::first();
-        if (!$operator || !$cabang) return;
+        DB::table('customer')->truncate();
+        $user = DB::table('users')->where('email', 'customer@example.com')->first();
+        if (!$user) return;
 
-        Customer::create([
-            'nama_customer' => 'PT Pelanggan Jaya',
-            'email' => 'customer@example.com',
-            'no_telp' => 628144444444,
+        DB::table('customer')->insert([
+            'id_user' => $user->id,
+            'nama' => 'PT Pelanggan Jaya',
+            'no_telp' => '08144444444',
             'alamat' => 'Jalan Kenanga No.3',
-            'id_operator' => $operator->id,
-            'id_cabang' => $cabang->id,
+            'email' => 'customer@example.com',
+            'foto' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

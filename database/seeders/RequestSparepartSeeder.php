@@ -5,24 +5,24 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class PengeluaranSeeder extends Seeder
+class RequestSparepartSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('pengeluaran')->truncate();
+        DB::table('request_sparepart')->truncate();
         $teknisi = DB::table('teknisi')->first();
-        $cabang = DB::table('cabang')->first();
+        $operator = DB::table('operator')->first();
         $sparepart = DB::table('sparepart')->first();
-        if (!$teknisi || !$cabang || !$sparepart) return;
+        if (!$teknisi || !$operator || !$sparepart) return;
 
-        DB::table('pengeluaran')->insert([
+        DB::table('request_sparepart')->insert([
             [
-                'id_cabang' => $cabang->id,
                 'id_teknisi' => $teknisi->id,
+                'id_operator' => $operator->id,
                 'id_sparepart' => $sparepart->id,
-                'jumlah' => 30000.00,
-                'keterangan' => 'Pembelian fuse',
-                'tanggal' => now()->subDays(2),
+                'jumlah' => 2,
+                'status' => 'disetujui',
+                'catatan' => 'Kebutuhan perbaikan awal',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

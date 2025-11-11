@@ -3,29 +3,28 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Sparepart;
-use App\Models\Kategori;
-use App\Models\Merek;
+use Illuminate\Support\Facades\DB;
 
 class SparepartSeeder extends Seeder
 {
     public function run(): void
     {
-        Sparepart::truncate();
-        $kategori = Kategori::first();
-        $merek = Merek::first();
-        if (!$kategori || !$merek) return;
+        DB::table('sparepart')->truncate();
+        $kategori = DB::table('kategori')->first();
+        if (!$kategori) return;
 
-        Sparepart::insert([
+        DB::table('sparepart')->insert([
             [
                 'id_kategori' => $kategori->id,
-                'id_merek' => $merek->id,
                 'nama_sparepart' => 'Fuse 10A',
-                'satuan' => 'pcs',
-                'harga_beli' => 5000,
-                'harga_jual' => 8000,
+                'merek' => 'Generic',
                 'stok' => 100,
+                'harga_beli' => 5000.00,
+                'harga_jual' => 8000.00,
+                'deskripsi' => 'Fuse ukuran 10A',
                 'foto' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

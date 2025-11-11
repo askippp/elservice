@@ -3,22 +3,24 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Admin;
-use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        Admin::truncate();
-        $user = User::where('email_user', 'admin@example.com')->first();
+        DB::table('admin')->truncate();
+        $user = DB::table('users')->where('email', 'admin@example.com')->first();
         if (!$user) return;
 
-        Admin::create([
-            'email' => 'admin@example.com',
-            'no_telp' => '0811111111',
-            'nama_lengkap' => 'Admin Utama',
+        DB::table('admin')->insert([
             'id_user' => $user->id,
+            'nama' => 'Admin Utama',
+            'no_telp' => '0811111111',
+            'alamat' => 'Jalan Admin No.1',
+            'foto' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

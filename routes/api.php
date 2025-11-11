@@ -30,5 +30,18 @@ Route::middleware('auth:sanctum', 'admin')->group(function () {
     Route::get('/laporan/pengeluaran', [LaporanController::class, 'getTotalPengeluaran']);
     Route::get('/laporan/selisih', [LaporanController::class, 'getSelisih']);
 
-    
+    Route::get('/sparepart/request/admin/{id_admin}', [RequestSparepartController::class, 'getRequestSparepartFromOperator']);
+    Route::post('/sparepart/request/{id_request}/approve', [RequestSparepartController::class, 'approveRequestSparepart']);
+    Route::post('/sparepart/request/{id_request}/reject', [RequestSparepartController::class, 'rejectRequestSparepart']);
+});
+
+Route::middleware('auth:sanctum', 'operator')->group(function () {
+    Route::get('/sparepart/request/operator/{id_operator}', [RequestSparepartController::class, 'getRequestSparepartFromTechnician']);
+    Route::post('/sparepart/request/operator-to-admin', [RequestSparepartController::class, 'setRequestSparepartToAdmin']);
+    Route::get('/sparepart/request/operator/{id_operator}', [RequestSparepartController::class, 'getRequestByOperator']);
+});
+
+Route::middleware('auth:sanctum', 'teknisi')->group(function () {
+    Route::post('/sparepart/request/technician', [RequestSparepartController::class, 'setRequestSparepartForOperator']);
+    Route::get('/sparepart/request/technician/{id_teknisi}', [RequestSparepartController::class, 'getRequestByTechnician']);
 });

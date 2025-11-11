@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('id_teknisi')->constrained('teknisi')
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_operator')->constrained('operator')
-                ->restrictOnDelete()->cascadeOnUpdate();
+                ->nullable()->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_sparepart')->constrained('sparepart')
-                ->restrictOnDelete()->cascadeOnUpdate();
+                ->nullable()->restrictOnDelete()->cascadeOnUpdate();
             $table->integer('jumlah');
             $table->enum('status', ['pending','disetujui','ditolak'])->default('pending');
             $table->text('catatan')->nullable();

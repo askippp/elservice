@@ -3,41 +3,38 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Service;
-use App\Models\Customer;
-use App\Models\Operator;
-use App\Models\Teknisi;
-use App\Models\Alat;
-use App\Models\Cabang;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ServiceSeeder extends Seeder
 {
     public function run(): void
     {
-        Service::truncate();
-        $customer = Customer::first();
-        $operator = Operator::first();
-        $teknisi = Teknisi::first();
-        $alat = Alat::first();
-        $cabang = Cabang::first();
-        if (!$customer || !$operator || !$teknisi || !$alat || !$cabang) return;
+        DB::table('service')->truncate();
+        $customer = DB::table('customer')->first();
+        $operator = DB::table('operator')->first();
+        $teknisi = DB::table('teknisi')->first();
+        $alat = DB::table('alat')->first();
+        if (!$customer || !$operator || !$teknisi || !$alat) return;
 
-        Service::insert([
+        DB::table('service')->insert([
             [
                 'id_customer' => $customer->id,
                 'id_operator' => $operator->id,
                 'id_teknisi' => $teknisi->id,
                 'id_alat' => $alat->id,
-                'id_cabang' => $cabang->id,
-                'tgl_service' => Carbon::now()->subDays(3),
+                'jenis_service' => 'drop_off',
+                'alamat_service' => null,
                 'keluhan' => 'Alat tidak menyala',
-                'status' => 'proses',
-                'tgl_selesai' => null,
-                'keterangan' => null,
-                'total_harga' => null,
-                'status_bayar' => 'belum_bayar',
-                'tipe_pembayaran' => null,
+                'diagnosa' => null,
+                'biaya_service' => null,
+                'biaya_kunjungan' => null,
+                'total_biaya' => null,
+                'status' => 'menunggu',
+                'tanggal_masuk' => now()->subDays(3),
+                'tanggal_selesai' => null,
+                'catatan' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

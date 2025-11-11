@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,6 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $id_alat
  * @property int $id_cabang
+ * @property string $ketersediaan
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * 
  * @property Alat $alat
  * @property Cabang $cabang
@@ -23,7 +27,6 @@ use Illuminate\Database\Eloquent\Model;
 class AlatCabang extends Model
 {
 	protected $table = 'alat_cabang';
-	public $timestamps = false;
 
 	protected $casts = [
 		'id_alat' => 'int',
@@ -32,7 +35,8 @@ class AlatCabang extends Model
 
 	protected $fillable = [
 		'id_alat',
-		'id_cabang'
+		'id_cabang',
+		'ketersediaan'
 	];
 
 	public function alat()

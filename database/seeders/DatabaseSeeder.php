@@ -30,12 +30,12 @@ class DatabaseSeeder extends Seeder
             TeknisiSeeder::class,
             CustomerSeeder::class,
             ServiceSeeder::class,
-            DiagnosaServiceSeeder::class,
             PivotAlatCabangSeeder::class,
             PivotSparepartCabangSeeder::class,
             PengeluaranSeeder::class,
             PemasukanSeeder::class,
             PivotSparepartServiceSeeder::class,
+            RequestSparepartSeeder::class,
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

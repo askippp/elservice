@@ -3,22 +3,23 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Sparepart;
-use App\Models\Cabang;
-use App\Models\SparepartCabang;
+use Illuminate\Support\Facades\DB;
 
 class PivotSparepartCabangSeeder extends Seeder
 {
     public function run(): void
     {
-        SparepartCabang::truncate();
-        $sparepart = Sparepart::first();
-        $cabang = Cabang::first();
+        DB::table('sparepart_cabang')->truncate();
+        $sparepart = DB::table('sparepart')->first();
+        $cabang = DB::table('cabang')->first();
         if (!$sparepart || !$cabang) return;
 
-        SparepartCabang::create([
+        DB::table('sparepart_cabang')->insert([
             'id_sparepart' => $sparepart->id,
             'id_cabang' => $cabang->id,
+            'stok' => 50,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

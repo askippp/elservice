@@ -18,23 +18,26 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_operator
  * @property int $id_teknisi
  * @property int $id_alat
- * @property int $id_cabang
- * @property Carbon $tgl_service
+ * @property string $jenis_service
+ * @property string|null $alamat_service
  * @property string $keluhan
+ * @property string|null $diagnosa
+ * @property float|null $biaya_service
+ * @property float|null $biaya_kunjungan
+ * @property float|null $total_biaya
  * @property string $status
- * @property Carbon|null $tgl_selesai
- * @property string|null $keterangan
- * @property int|null $total_harga
- * @property string $status_bayar
- * @property string|null $tipe_pembayaran
+ * @property Carbon $tanggal_masuk
+ * @property Carbon|null $tanggal_selesai
+ * @property string|null $catatan
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * 
  * @property Alat $alat
- * @property Cabang $cabang
  * @property Customer $customer
  * @property Operator $operator
  * @property Teknisi $teknisi
  * @property Collection|Pemasukan[] $pemasukans
- * @property Collection|Pengeluaran[] $pengeluarans
+ * @property Collection|Pembayaran[] $pembayarans
  * @property Collection|Sparepart[] $spareparts
  *
  * @package App\Models
@@ -42,17 +45,17 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
 	protected $table = 'service';
-	public $timestamps = false;
 
 	protected $casts = [
 		'id_customer' => 'int',
 		'id_operator' => 'int',
 		'id_teknisi' => 'int',
 		'id_alat' => 'int',
-		'id_cabang' => 'int',
-		'tgl_service' => 'datetime',
-		'tgl_selesai' => 'datetime',
-		'total_harga' => 'int'
+		'biaya_service' => 'float',
+		'biaya_kunjungan' => 'float',
+		'total_biaya' => 'float',
+		'tanggal_masuk' => 'datetime',
+		'tanggal_selesai' => 'datetime'
 	];
 
 	protected $fillable = [
@@ -60,25 +63,22 @@ class Service extends Model
 		'id_operator',
 		'id_teknisi',
 		'id_alat',
-		'id_cabang',
-		'tgl_service',
+		'jenis_service',
+		'alamat_service',
 		'keluhan',
+		'diagnosa',
+		'biaya_service',
+		'biaya_kunjungan',
+		'total_biaya',
 		'status',
-		'tgl_selesai',
-		'keterangan',
-		'total_harga',
-		'status_bayar',
-		'tipe_pembayaran'
+		'tanggal_masuk',
+		'tanggal_selesai',
+		'catatan'
 	];
 
 	public function alat()
 	{
 		return $this->belongsTo(Alat::class, 'id_alat');
-	}
-
-	public function cabang()
-	{
-		return $this->belongsTo(Cabang::class, 'id_cabang');
 	}
 
 	public function customer()
@@ -101,14 +101,15 @@ class Service extends Model
 		return $this->hasMany(Pemasukan::class, 'id_service');
 	}
 
-	public function pengeluarans()
+	public function pembayarans()
 	{
-		return $this->hasMany(Pengeluaran::class, 'id_service');
+		return $this->hasMany(Pembayaran::class, 'id_service');
 	}
 
 	public function spareparts()
 	{
-		return $this->belongsToMany(Sparepart::class, 'sparepart_service', 'id_service', 'id_sparepart')
-					->withPivot('id', 'jumlah', 'subtotal');
+		return $this->belongsToMany(Sparepart::class, 'service_sparepart', 'id_service', 'id_sparepart')
+					->withPivot('id', 'jumlah', 'harga_satuan', 'subtotal')
+					->withTimestamps();
 	}
 }

@@ -8,43 +8,58 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model as Authenticatable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class User
  * 
  * @property int $id
- * @property string $email_user
+ * @property string $username
+ * @property string $email
  * @property string $password
- * @property string|null $foto
+ * @property string $role
+ * @property string|null $token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Collection|Admin[] $admins
+ * @property Collection|Customer[] $customers
+ * @property Collection|Log[] $logs
  * @property Collection|Operator[] $operators
  * @property Collection|Teknisi[] $teknisis
  *
  * @package App\Models
  */
-class User extends Authenticatable
+class User extends Model
 {
-	use HasApiTokens;
-	protected $table = 'user';
+	protected $table = 'users';
 
 	protected $hidden = [
-		'password'
+		'password',
+		'token'
 	];
 
 	protected $fillable = [
-		'email_user',
+		'username',
+		'email',
 		'password',
-		'foto'
+		'role',
+		'token'
 	];
 
 	public function admins()
 	{
 		return $this->hasMany(Admin::class, 'id_user');
+	}
+
+	public function customers()
+	{
+		return $this->hasMany(Customer::class, 'id_user');
+	}
+
+	public function logs()
+	{
+		return $this->hasMany(Log::class, 'id_user');
 	}
 
 	public function operators()

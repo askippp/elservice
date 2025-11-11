@@ -15,21 +15,17 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id
  * @property string $nama_cabang
- * @property int $no_telp
  * @property string $alamat
- * @property string $kota
- * @property string $email
- * @property string|null $foto
+ * @property string $no_telp
  * @property string $status
+ * @property string|null $foto
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Collection|Alat[] $alats
- * @property Collection|Customer[] $customers
  * @property Collection|Operator[] $operators
  * @property Collection|Pemasukan[] $pemasukans
  * @property Collection|Pengeluaran[] $pengeluarans
- * @property Collection|Service[] $services
  * @property Collection|Sparepart[] $spareparts
  * @property Collection|Teknisi[] $teknisis
  *
@@ -39,29 +35,19 @@ class Cabang extends Model
 {
 	protected $table = 'cabang';
 
-	protected $casts = [
-		'no_telp' => 'int'
-	];
-
 	protected $fillable = [
 		'nama_cabang',
-		'no_telp',
 		'alamat',
-		'kota',
-		'email',
-		'foto',
-		'status'
+		'no_telp',
+		'status',
+		'foto'
 	];
 
 	public function alats()
 	{
 		return $this->belongsToMany(Alat::class, 'alat_cabang', 'id_cabang', 'id_alat')
-					->withPivot('id');
-	}
-
-	public function customers()
-	{
-		return $this->hasMany(Customer::class, 'id_cabang');
+					->withPivot('id', 'ketersediaan')
+					->withTimestamps();
 	}
 
 	public function operators()
@@ -79,15 +65,11 @@ class Cabang extends Model
 		return $this->hasMany(Pengeluaran::class, 'id_cabang');
 	}
 
-	public function services()
-	{
-		return $this->hasMany(Service::class, 'id_cabang');
-	}
-
 	public function spareparts()
 	{
 		return $this->belongsToMany(Sparepart::class, 'sparepart_cabang', 'id_cabang', 'id_sparepart')
-					->withPivot('id');
+					->withPivot('id', 'stok')
+					->withTimestamps();
 	}
 
 	public function teknisis()

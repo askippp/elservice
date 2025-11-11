@@ -3,27 +3,26 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Pemasukan;
-use App\Models\Service;
-use App\Models\Cabang;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PemasukanSeeder extends Seeder
 {
     public function run(): void
     {
-        Pemasukan::truncate();
-        $service = Service::first();
-        $cabang = Cabang::first();
+        DB::table('pemasukan')->truncate();
+        $service = DB::table('service')->first();
+        $cabang = DB::table('cabang')->first();
         if (!$service || !$cabang) return;
 
-        Pemasukan::insert([
+        DB::table('pemasukan')->insert([
             [
                 'id_service' => $service->id,
                 'id_cabang' => $cabang->id,
-                'tgl' => Carbon::now()->subDay(),
-                'sumber' => 'Pelunasan service',
-                'jumlah' => 150000,
+                'jumlah' => 150000.00,
+                'keterangan' => 'Pelunasan service',
+                'tanggal' => now()->subDay(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

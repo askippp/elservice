@@ -14,17 +14,16 @@ use Illuminate\Database\Eloquent\Model;
  * Class Customer
  * 
  * @property int $id
- * @property string $nama_customer
- * @property string $email
- * @property int $no_telp
+ * @property int $id_user
+ * @property string $nama
+ * @property string $no_telp
  * @property string $alamat
- * @property int $id_operator
- * @property int $id_cabang
+ * @property string $email
+ * @property string|null $foto
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Cabang $cabang
- * @property Operator $operator
+ * @property User $user
  * @property Collection|Service[] $services
  *
  * @package App\Models
@@ -34,28 +33,21 @@ class Customer extends Model
 	protected $table = 'customer';
 
 	protected $casts = [
-		'no_telp' => 'int',
-		'id_operator' => 'int',
-		'id_cabang' => 'int'
+		'id_user' => 'int'
 	];
 
 	protected $fillable = [
-		'nama_customer',
-		'email',
+		'id_user',
+		'nama',
 		'no_telp',
 		'alamat',
-		'id_operator',
-		'id_cabang'
+		'email',
+		'foto'
 	];
 
-	public function cabang()
+	public function user()
 	{
-		return $this->belongsTo(Cabang::class, 'id_cabang');
-	}
-
-	public function operator()
-	{
-		return $this->belongsTo(Operator::class, 'id_operator');
+		return $this->belongsTo(User::class, 'id_user');
 	}
 
 	public function services()

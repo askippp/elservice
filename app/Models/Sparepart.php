@@ -15,21 +15,21 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id
  * @property int $id_kategori
- * @property int $id_merek
  * @property string $nama_sparepart
- * @property string $satuan
- * @property int $harga_beli
- * @property int $harga_jual
+ * @property string $merek
  * @property int $stok
+ * @property float $harga_beli
+ * @property float $harga_jual
+ * @property string|null $deskripsi
  * @property string|null $foto
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Kategori $kategori
- * @property Merek $merek
  * @property Collection|Pengeluaran[] $pengeluarans
- * @property Collection|Cabang[] $cabangs
+ * @property Collection|RequestSparepart[] $request_spareparts
  * @property Collection|Service[] $services
+ * @property Collection|Cabang[] $cabangs
  *
  * @package App\Models
  */
@@ -39,20 +39,19 @@ class Sparepart extends Model
 
 	protected $casts = [
 		'id_kategori' => 'int',
-		'id_merek' => 'int',
-		'harga_beli' => 'int',
-		'harga_jual' => 'int',
-		'stok' => 'int'
+		'stok' => 'int',
+		'harga_beli' => 'float',
+		'harga_jual' => 'float'
 	];
 
 	protected $fillable = [
 		'id_kategori',
-		'id_merek',
 		'nama_sparepart',
-		'satuan',
+		'merek',
+		'stok',
 		'harga_beli',
 		'harga_jual',
-		'stok',
+		'deskripsi',
 		'foto'
 	];
 
@@ -61,25 +60,27 @@ class Sparepart extends Model
 		return $this->belongsTo(Kategori::class, 'id_kategori');
 	}
 
-	public function merek()
-	{
-		return $this->belongsTo(Merek::class, 'id_merek');
-	}
-
 	public function pengeluarans()
 	{
 		return $this->hasMany(Pengeluaran::class, 'id_sparepart');
 	}
 
-	public function cabangs()
+	public function request_spareparts()
 	{
-		return $this->belongsToMany(Cabang::class, 'sparepart_cabang', 'id_sparepart', 'id_cabang')
-					->withPivot('id');
+		return $this->hasMany(RequestSparepart::class, 'id_sparepart');
 	}
 
 	public function services()
 	{
-		return $this->belongsToMany(Service::class, 'sparepart_service', 'id_sparepart', 'id_service')
-					->withPivot('id', 'jumlah', 'subtotal');
+		return $this->belongsToMany(Service::class, 'service_sparepart', 'id_sparepart', 'id_service')
+					->withPivot('id', 'jumlah', 'harga_satuan', 'subtotal')
+					->withTimestamps();
+	}
+
+	public function cabangs()
+	{
+		return $this->belongsToMany(Cabang::class, 'sparepart_cabang', 'id_sparepart', 'id_cabang')
+					->withPivot('id', 'stok')
+					->withTimestamps();
 	}
 }

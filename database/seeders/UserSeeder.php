@@ -3,29 +3,50 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::truncate();
-        User::insert([
+        DB::table('users')->truncate();
+        DB::table('users')->insert([
             [
-                'email_user' => 'admin@example.com',
+                'username' => 'admin',
+                'email' => 'admin@example.com',
                 'password' => Hash::make('password'),
-                'foto' => null,
+                'role' => 'admin',
+                'token' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'email_user' => 'operator@example.com',
+                'username' => 'operator',
+                'email' => 'operator@example.com',
                 'password' => Hash::make('password'),
-                'foto' => null,
+                'role' => 'operator',
+                'token' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'email_user' => 'teknisi@example.com',
+                'username' => 'teknisi',
+                'email' => 'teknisi@example.com',
                 'password' => Hash::make('password'),
-                'foto' => null,
+                'role' => 'teknisi',
+                'token' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'username' => 'customer',
+                'email' => 'customer@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'customer',
+                'token' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

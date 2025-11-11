@@ -14,17 +14,20 @@ use Illuminate\Database\Eloquent\Model;
  * Class Teknisi
  * 
  * @property int $id
- * @property string $email
- * @property string $no_telp
- * @property string $nama_lengkap
  * @property int $id_user
  * @property int $id_cabang
+ * @property string $nama
+ * @property string $spesialisasi
+ * @property string $no_telp
+ * @property string $alamat
+ * @property string|null $foto
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Cabang $cabang
  * @property User $user
- * @property Collection|DiagnosaService[] $diagnosa_services
+ * @property Collection|Pengeluaran[] $pengeluarans
+ * @property Collection|RequestSparepart[] $request_spareparts
  * @property Collection|Service[] $services
  *
  * @package App\Models
@@ -39,11 +42,13 @@ class Teknisi extends Model
 	];
 
 	protected $fillable = [
-		'email',
-		'no_telp',
-		'nama_lengkap',
 		'id_user',
-		'id_cabang'
+		'id_cabang',
+		'nama',
+		'spesialisasi',
+		'no_telp',
+		'alamat',
+		'foto'
 	];
 
 	public function cabang()
@@ -56,9 +61,14 @@ class Teknisi extends Model
 		return $this->belongsTo(User::class, 'id_user');
 	}
 
-	public function diagnosa_services()
+	public function pengeluarans()
 	{
-		return $this->hasMany(DiagnosaService::class, 'id_teknisi');
+		return $this->hasMany(Pengeluaran::class, 'id_teknisi');
+	}
+
+	public function request_spareparts()
+	{
+		return $this->hasMany(RequestSparepart::class, 'id_teknisi');
 	}
 
 	public function services()

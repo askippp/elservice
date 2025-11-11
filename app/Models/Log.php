@@ -10,35 +10,31 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Admin
+ * Class Log
  * 
  * @property int $id
  * @property int $id_user
- * @property string $nama
- * @property string $no_telp
- * @property string $alamat
- * @property string|null $foto
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property string $aktivitas
+ * @property Carbon $waktu
  * 
  * @property User $user
  *
  * @package App\Models
  */
-class Admin extends Model
+class Log extends Model
 {
-	protected $table = 'admin';
+	protected $table = 'logs';
+	public $timestamps = false;
 
 	protected $casts = [
-		'id_user' => 'int'
+		'id_user' => 'int',
+		'waktu' => 'datetime'
 	];
 
 	protected $fillable = [
 		'id_user',
-		'nama',
-		'no_telp',
-		'alamat',
-		'foto'
+		'aktivitas',
+		'waktu'
 	];
 
 	public function user()

@@ -10,48 +10,47 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Pengeluaran
+ * Class RequestSparepart
  * 
  * @property int $id
- * @property int $id_cabang
  * @property int $id_teknisi
+ * @property int $id_operator
  * @property int $id_sparepart
- * @property float $jumlah
- * @property string|null $keterangan
- * @property Carbon $tanggal
+ * @property int $jumlah
+ * @property string $status
+ * @property string|null $catatan
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Cabang $cabang
+ * @property Operator $operator
  * @property Sparepart $sparepart
  * @property Teknisi $teknisi
  *
  * @package App\Models
  */
-class Pengeluaran extends Model
+class RequestSparepart extends Model
 {
-	protected $table = 'pengeluaran';
+	protected $table = 'request_sparepart';
 
 	protected $casts = [
-		'id_cabang' => 'int',
 		'id_teknisi' => 'int',
+		'id_operator' => 'int',
 		'id_sparepart' => 'int',
-		'jumlah' => 'float',
-		'tanggal' => 'datetime'
+		'jumlah' => 'int'
 	];
 
 	protected $fillable = [
-		'id_cabang',
 		'id_teknisi',
+		'id_operator',
 		'id_sparepart',
 		'jumlah',
-		'keterangan',
-		'tanggal'
+		'status',
+		'catatan'
 	];
 
-	public function cabang()
+	public function operator()
 	{
-		return $this->belongsTo(Cabang::class, 'id_cabang');
+		return $this->belongsTo(Operator::class, 'id_operator');
 	}
 
 	public function sparepart()

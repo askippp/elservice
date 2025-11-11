@@ -3,25 +3,26 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Operator;
-use App\Models\User;
-use App\Models\Cabang;
+use Illuminate\Support\Facades\DB;
 
 class OperatorSeeder extends Seeder
 {
     public function run(): void
     {
-        Operator::truncate();
-        $user = User::where('email_user', 'operator@example.com')->first();
-        $cabang = Cabang::first();
+        DB::table('operator')->truncate();
+        $user = DB::table('users')->where('email', 'operator@example.com')->first();
+        $cabang = DB::table('cabang')->first();
         if (!$user || !$cabang) return;
 
-        Operator::create([
-            'email' => 'operator@example.com',
-            'no_telp' => '0812222222',
-            'nama_lengkap' => 'Operator Satu',
+        DB::table('operator')->insert([
             'id_user' => $user->id,
             'id_cabang' => $cabang->id,
+            'nama' => 'Operator Satu',
+            'no_telp' => '0812222222',
+            'alamat' => 'Jalan Operator No.1',
+            'foto' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

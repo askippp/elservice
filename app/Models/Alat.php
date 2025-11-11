@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_merek
  * @property string $nama_alat
  * @property string $tipe_model
- * @property string $deskripsi
+ * @property string|null $deskripsi
  * @property string|null $foto
  * @property string $status
  * @property Carbon|null $created_at
@@ -63,7 +63,8 @@ class Alat extends Model
 	public function cabangs()
 	{
 		return $this->belongsToMany(Cabang::class, 'alat_cabang', 'id_alat', 'id_cabang')
-					->withPivot('id');
+					->withPivot('id', 'ketersediaan')
+					->withTimestamps();
 	}
 
 	public function services()

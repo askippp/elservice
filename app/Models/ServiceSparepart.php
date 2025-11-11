@@ -10,39 +10,45 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class SparepartCabang
+ * Class ServiceSparepart
  * 
  * @property int $id
+ * @property int $id_service
  * @property int $id_sparepart
- * @property int $id_cabang
- * @property int $stok
+ * @property int $jumlah
+ * @property float $harga_satuan
+ * @property float $subtotal
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Cabang $cabang
+ * @property Service $service
  * @property Sparepart $sparepart
  *
  * @package App\Models
  */
-class SparepartCabang extends Model
+class ServiceSparepart extends Model
 {
-	protected $table = 'sparepart_cabang';
+	protected $table = 'service_sparepart';
 
 	protected $casts = [
+		'id_service' => 'int',
 		'id_sparepart' => 'int',
-		'id_cabang' => 'int',
-		'stok' => 'int'
+		'jumlah' => 'int',
+		'harga_satuan' => 'float',
+		'subtotal' => 'float'
 	];
 
 	protected $fillable = [
+		'id_service',
 		'id_sparepart',
-		'id_cabang',
-		'stok'
+		'jumlah',
+		'harga_satuan',
+		'subtotal'
 	];
 
-	public function cabang()
+	public function service()
 	{
-		return $this->belongsTo(Cabang::class, 'id_cabang');
+		return $this->belongsTo(Service::class, 'id_service');
 	}
 
 	public function sparepart()

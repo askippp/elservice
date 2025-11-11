@@ -10,45 +10,44 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Pemasukan
+ * Class Pembayaran
  * 
  * @property int $id
  * @property int $id_service
- * @property int $id_cabang
+ * @property string $metode
+ * @property string $status
+ * @property string|null $midtrans_order_id
+ * @property string|null $midtrans_transaction_id
+ * @property string|null $midtrans_va_number
  * @property float $jumlah
- * @property string|null $keterangan
  * @property Carbon $tanggal
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Cabang $cabang
  * @property Service $service
  *
  * @package App\Models
  */
-class Pemasukan extends Model
+class Pembayaran extends Model
 {
-	protected $table = 'pemasukan';
+	protected $table = 'pembayaran';
 
 	protected $casts = [
 		'id_service' => 'int',
-		'id_cabang' => 'int',
 		'jumlah' => 'float',
 		'tanggal' => 'datetime'
 	];
 
 	protected $fillable = [
 		'id_service',
-		'id_cabang',
+		'metode',
+		'status',
+		'midtrans_order_id',
+		'midtrans_transaction_id',
+		'midtrans_va_number',
 		'jumlah',
-		'keterangan',
 		'tanggal'
 	];
-
-	public function cabang()
-	{
-		return $this->belongsTo(Cabang::class, 'id_cabang');
-	}
 
 	public function service()
 	{
