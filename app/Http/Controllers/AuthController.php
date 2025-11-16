@@ -60,8 +60,34 @@ class AuthController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'no_telp' => 'required|integer|unique:',
+            'no_telp' => 'required|integer|unique:customer,no_telp',
+            'alamat' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'username' => 'required|string|max:10',
+            'password' => 'required|min:8',
+            'confirm_password' => 'required|same:password',
         ]);
+
+        $users = User::create([
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'role' => 'customer',
+        ]);
+
+        $customer = Customer::create([
+            'id_user' => $users->id,
+            'nama' => $request->nama,
+            'no_telp' => $request->no_telp,
+            'alamat' => $request->alamat,
+            'email' => $request->email,
+        ]);
+
+        return response()->json([
+            'message' => 'User created successfully',
+            'user' => $users,
+            'customer' => $customer,
+        ], 201);
     }
 
     public function logout(Request $request)

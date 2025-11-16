@@ -15,6 +15,7 @@ use App\Http\Controllers\RequestSparepartController;
 use App\Http\Controllers\UserController;
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
@@ -42,7 +43,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::patch('/sparepart/request/{id_request}/approve', [RequestSparepartController::class, 'approveRequestSparepart']);
     Route::patch('/sparepart/request/{id_request}/reject', [RequestSparepartController::class, 'rejectRequestSparepart']);
 
-    Route::get('/dashboard/service-summary', [DashboardController::class, 'serviceSummary']);
+    Route::get('/admin/dashboard/service-summary', [DashboardController::class, 'serviceSummary']);
 });
 
 Route::middleware(['auth:sanctum', 'role:operator'])->group(function () {
@@ -50,7 +51,7 @@ Route::middleware(['auth:sanctum', 'role:operator'])->group(function () {
     Route::patch('/sparepart/request/{id_request}/operator', [RequestSparepartController::class, 'setRequestSparepartToAdmin']);
     Route::get('/sparepart/request/operator/{id_operator}', [RequestSparepartController::class, 'getRequestByOperator']);
 
-    Route::get('/dashboard/service-summary', [DashboardController::class, 'serviceSummary']);
+    Route::get('/operator/dashboard/service-summary', [DashboardController::class, 'serviceSummary']);
 });
 
 Route::middleware(['auth:sanctum', 'role:teknisi'])->group(function () {
