@@ -42,6 +42,7 @@ class Operator extends Model
 	protected $fillable = [
 		'id_user',
 		'id_cabang',
+		'email',
 		'nama',
 		'no_telp',
 		'alamat',

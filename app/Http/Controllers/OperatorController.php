@@ -20,15 +20,19 @@ class OperatorController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|unique:operator,email',
             'no_telp' => 'required|string',
-            'nama_lengkap' => 'required|string',
-            'id_user' => 'required|integer|exists:user,id',
+            'nama' => 'required|string',
+            'alamat' => 'required|string',
+            'foto' => 'nullable|string',
             'id_cabang' => 'required|integer|exists:cabang,id',
         ]);
 
         $operator = Operator::create($validated);
-        return response()->json($operator, 201);
+        return response()->json([
+            'message' => 'Operator created successfully',
+            'operator' => $operator,
+        ], 201);
     }
 
     public function update(Request $request, Operator $operator)
@@ -36,18 +40,24 @@ class OperatorController extends Controller
         $validated = $request->validate([
             'email' => 'sometimes|required|email',
             'no_telp' => 'sometimes|required|string',
-            'nama_lengkap' => 'sometimes|required|string',
-            'id_user' => 'sometimes|required|integer|exists:user,id',
+            'nama' => 'sometimes|required|string',
+            'alamat' => 'sometimes|required|string',
+            'foto' => 'sometimes|nullable|string',
             'id_cabang' => 'sometimes|required|integer|exists:cabang,id',
         ]);
 
         $operator->update($validated);
-        return response()->json($operator);
+        return response()->json([
+            'message' => 'Operator updated successfully',
+            'operator' => $operator,
+        ]);
     }
 
     public function destroy(Operator $operator)
     {
         $operator->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Operator deleted successfully',
+        ], 200);
     }
 }

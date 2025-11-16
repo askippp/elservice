@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Operator;
 use App\Models\Teknisi;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,31 +20,28 @@ class AuthController extends Controller
         ]);
 
         //cek email di table user
-        $user = User::where('email_user', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'User tidak ditemukan'], 401);
         }
 
-        $role = null;
+        $role = $user->role ?? 'user';
         $detail = null;
 
-        //cek email di table admin
-        if (Admin::where('email', $request->email)->exists()) {
+        // check if the user has a related admin/operator/teknisi/customer record
+        if (Admin::where('id_user', $user->id)->exists()) {
             $role = 'admin';
-            $detail = Admin::where('email', $request->email)->first();
-        } elseif (Operator::where('email', $request->email)->exists()) {
-            //cek email di table operator
+            $detail = Admin::where('id_user', $user->id)->first();
+        } elseif (Operator::where('id_user', $user->id)->exists()) {
             $role = 'operator';
-            $detail = Operator::where('email', $request->email)->first();
-        } elseif(Teknisi::where('email', $request->email)->exists()){
-            //cek email di table teknisi
+            $detail = Operator::where('id_user', $user->id)->first();
+        } elseif (Teknisi::where('id_user', $user->id)->exists()) {
             $role = 'teknisi';
-            $detail = Teknisi::where('email', $request->email)->first();
-        } else {
-            //jika bukan admin atau operator, maka role adalah user biasa
-            $role = 'unknown';
-            $detail = null;
+            $detail = Teknisi::where('id_user', $user->id)->first();
+        } elseif (Customer::where('id_user', $user->id)->exists()) {
+            $role = 'customer';
+            $detail = Customer::where('id_user', $user->id)->first();
         }
 
         // Generate a new token for the user

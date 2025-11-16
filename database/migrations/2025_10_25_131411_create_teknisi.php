@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('teknisi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user')->constrained('users')
-                ->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreignId('id_user')
+                ->nullable()
+                ->constrained('users')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
             $table->foreignId('id_cabang')->constrained('cabang')
-                ->restrictOnDelete()->cascadeOnUpdate();
+                ->nullable()->restrictOnDelete()->cascadeOnUpdate();
             $table->string('nama', 100);
             $table->string('spesialisasi', 100);
             $table->string('no_telp', 20);

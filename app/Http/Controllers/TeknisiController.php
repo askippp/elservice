@@ -22,13 +22,18 @@ class TeknisiController extends Controller
         $validated = $request->validate([
             'email' => 'required|email',
             'no_telp' => 'required|string',
-            'nama_lengkap' => 'required|string',
-            'id_user' => 'required|integer|exists:user,id',
+            'nama' => 'required|string',
+            'alamat' => 'required|string',
+            'spesialisasi' => 'required|string',
+            'foto' => 'nullable|string',
             'id_cabang' => 'required|integer|exists:cabang,id',
         ]);
 
         $teknisi = Teknisi::create($validated);
-        return response()->json($teknisi, 201);
+        return response()->json([
+            'message' => 'Teknisi created successfully',
+            'teknisi' => $teknisi,
+        ], 201);
     }
 
     public function update(Request $request, Teknisi $teknisi)
@@ -36,18 +41,25 @@ class TeknisiController extends Controller
         $validated = $request->validate([
             'email' => 'sometimes|required|email',
             'no_telp' => 'sometimes|required|string',
-            'nama_lengkap' => 'sometimes|required|string',
-            'id_user' => 'sometimes|required|integer|exists:user,id',
+            'nama' => 'sometimes|required|string',
+            'alamat' => 'sometimes|required|string',
+            'spesialisasi' => 'sometimes|required|string',
+            'foto' => 'sometimes|nullable|string',
             'id_cabang' => 'sometimes|required|integer|exists:cabang,id',
         ]);
 
         $teknisi->update($validated);
-        return response()->json($teknisi);
+        return response()->json([
+            'message' => 'Teknisi updated successfully',
+            'teknisi' => $teknisi,
+        ]);
     }
 
     public function destroy(Teknisi $teknisi)
     {
         $teknisi->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Teknisi deleted successfully',
+        ], 200);
     }
 }

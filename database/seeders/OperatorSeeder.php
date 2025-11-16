@@ -17,6 +17,7 @@ class OperatorSeeder extends Seeder
         DB::table('operator')->insert([
             'id_user' => $user->id,
             'id_cabang' => $cabang->id,
+            'email' => 'operator@example.com',
             'nama' => 'Operator Satu',
             'no_telp' => '0812222222',
             'alamat' => 'Jalan Operator No.1',

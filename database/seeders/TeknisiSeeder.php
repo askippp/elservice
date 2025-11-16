@@ -17,6 +17,7 @@ class TeknisiSeeder extends Seeder
         DB::table('teknisi')->insert([
             'id_user' => $user->id,
             'id_cabang' => $cabang->id,
+            'email' => 'teknisi@example.com',
             'nama' => 'Teknisi Andalan',
             'spesialisasi' => 'Elektronik',
             'no_telp' => '0813333333',

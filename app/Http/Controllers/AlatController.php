@@ -30,7 +30,10 @@ class AlatController extends Controller
         ]);
 
         $alat = Alat::create($validated);
-        return response()->json($alat, 201);
+        return response()->json([
+            'message' => 'Alat created successfully',
+            'data' => $alat
+        ], 201);
     }
 
     public function update(Request $request, Alat $alat)
@@ -46,12 +49,17 @@ class AlatController extends Controller
         ]);
 
         $alat->update($validated);
-        return response()->json($alat);
+        return response()->json([
+            'message' => 'Alat updated successfully',
+            'data' => $alat
+        ]);
     }
 
     public function destroy(Alat $alat)
     {
         $alat->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Alat deleted successfully'
+        ], 200);
     }
 }

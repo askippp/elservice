@@ -39,8 +39,6 @@ class RequestSparepartController extends Controller
             ->whereHas('teknisi', function ($query) use ($operator) {
                 $query->where('id_cabang', $operator->id_cabang);
             })
-            ->whereNull('id_operator')
-            ->where('status', 'pending')
             ->get();
 
         return response()->json([
@@ -49,24 +47,17 @@ class RequestSparepartController extends Controller
         ]);
     }
 
-    public function setRequestSparepartToAdmin(Request $request)
+    public function setRequestSparepartToAdmin(Request $request, $id_request)
     {
-        $data = $request->validate([
-            'id_request' => 'required|integer|exists:request_sparepart,id',
-            'id_operator' => 'required|integer|exists:operator,id',
-            'catatan' => 'nullable|string'
-        ]);
+        $operator = Operator::where('id_user', $request->user()->id)->firstOrFail();
 
-        $req = RequestSparepart::findOrFail($data['id_request']);
-        $req->id_operator = $data['id_operator'];
-        if (array_key_exists('catatan', $data)) {
-            $req->catatan = $data['catatan'];
-        }
-        // status tetap 'pending' hingga admin memutuskan
+        $req = RequestSparepart::findOrFail($id_request);
+        $req->id_operator = $operator->id;
+
         $req->save();
 
         return response()->json([
-            'message' => 'Request sparepart dari operator ke admin berhasil diajukan',
+            'message' => 'Request sparepart dari teknisi berhasil diajukan ke admin',
             'data' => $req
         ]);
     }
@@ -75,7 +66,6 @@ class RequestSparepartController extends Controller
     {
         $requests = RequestSparepart::with(['teknisi', 'sparepart', 'operator'])
             ->whereNotNull('id_operator')
-            ->where('status', 'pending')
             ->get();
 
         return response()->json([
@@ -126,19 +116,6 @@ class RequestSparepartController extends Controller
 
         return response()->json([
             'message' => 'Request spareparts for this technician retrieved successfully',
-            'data' => $requests
-        ]);
-    }
-
-    public function getRequestByOperator($id_operator)
-    {
-        $requests = RequestSparepart::with(['teknisi', 'sparepart'])
-            ->where('id_operator', $id_operator)
-            ->orderByDesc('created_at')
-            ->get();
-
-        return response()->json([
-            'message' => 'Request spareparts handled by this operator retrieved successfully',
             'data' => $requests
         ]);
     }

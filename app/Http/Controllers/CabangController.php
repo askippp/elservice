@@ -30,7 +30,10 @@ class CabangController extends Controller
         ]);
 
         $cabang = Cabang::create($validated);
-        return response()->json($cabang, 201);
+        return response()->json([
+            'message' => 'Cabang created successfully',
+            'cabang' => $cabang,
+        ], 201);
     }
 
     public function update(Request $request, Cabang $cabang)
@@ -46,12 +49,17 @@ class CabangController extends Controller
         ]);
 
         $cabang->update($validated);
-        return response()->json($cabang);
+        return response()->json([
+            'message' => 'Cabang updated successfully',
+            'cabang' => $cabang,
+        ], 200);
     }
 
     public function destroy(Cabang $cabang)
     {
         $cabang->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Cabang deleted successfully',
+        ], 200);
     }
 }

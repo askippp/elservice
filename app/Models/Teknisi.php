@@ -44,6 +44,7 @@ class Teknisi extends Model
 	protected $fillable = [
 		'id_user',
 		'id_cabang',
+		'email',
 		'nama',
 		'spesialisasi',
 		'no_telp',
