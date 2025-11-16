@@ -28,14 +28,6 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             OperatorSeeder::class,
             TeknisiSeeder::class,
-            CustomerSeeder::class,
-            ServiceSeeder::class,
-            PivotAlatCabangSeeder::class,
-            PivotSparepartCabangSeeder::class,
-            PengeluaranSeeder::class,
-            PemasukanSeeder::class,
-            PivotSparepartServiceSeeder::class,
-            RequestSparepartSeeder::class,
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

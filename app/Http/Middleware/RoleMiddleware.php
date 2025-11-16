@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Admin;
 use App\Models\Operator;
 use App\Models\Teknisi;
+use App\Models\Customer;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,6 +34,8 @@ class RoleMiddleware
             $userRole = 'operator';
         } elseif (Teknisi::where('id_user', $userId)->exists()) {
             $userRole = 'teknisi';
+        } elseif (Customer::where('id_user', $userId)->exists()) {
+            $userRole = 'customer';
         } else {
             $userRole = 'unknown';
         }

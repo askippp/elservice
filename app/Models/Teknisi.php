@@ -14,8 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  * Class Teknisi
  * 
  * @property int $id
- * @property int $id_user
+ * @property int|null $id_user
  * @property int $id_cabang
+ * @property string $email
  * @property string $nama
  * @property string $spesialisasi
  * @property string $no_telp
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * 
  * @property Cabang $cabang
- * @property User $user
+ * @property User|null $user
  * @property Collection|Pengeluaran[] $pengeluarans
  * @property Collection|RequestSparepart[] $request_spareparts
  * @property Collection|Service[] $services
@@ -74,6 +75,8 @@ class Teknisi extends Model
 
 	public function services()
 	{
-		return $this->hasMany(Service::class, 'id_teknisi');
+		return $this->belongsToMany(Service::class, 'service_teknisi', 'id_teknisi', 'id_service')
+					->withPivot('id')
+					->withTimestamps();
 	}
 }

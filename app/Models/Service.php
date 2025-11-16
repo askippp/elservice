@@ -15,10 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id
  * @property int $id_customer
+ * @property int $id_cabang
  * @property int $id_operator
- * @property int $id_teknisi
- * @property int $id_alat
- * @property string $jenis_service
  * @property string|null $alamat_service
  * @property string $keluhan
  * @property string|null $diagnosa
@@ -32,13 +30,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Alat $alat
+ * @property Cabang $cabang
  * @property Customer $customer
  * @property Operator $operator
- * @property Teknisi $teknisi
  * @property Collection|Pemasukan[] $pemasukans
  * @property Collection|Pembayaran[] $pembayarans
+ * @property Collection|Alat[] $alats
  * @property Collection|Sparepart[] $spareparts
+ * @property Collection|Teknisi[] $teknisis
  *
  * @package App\Models
  */
@@ -48,9 +47,8 @@ class Service extends Model
 
 	protected $casts = [
 		'id_customer' => 'int',
+		'id_cabang' => 'int',
 		'id_operator' => 'int',
-		'id_teknisi' => 'int',
-		'id_alat' => 'int',
 		'biaya_service' => 'float',
 		'biaya_kunjungan' => 'float',
 		'total_biaya' => 'float',
@@ -60,10 +58,8 @@ class Service extends Model
 
 	protected $fillable = [
 		'id_customer',
+		'id_cabang',
 		'id_operator',
-		'id_teknisi',
-		'id_alat',
-		'jenis_service',
 		'alamat_service',
 		'keluhan',
 		'diagnosa',
@@ -76,9 +72,9 @@ class Service extends Model
 		'catatan'
 	];
 
-	public function alat()
+	public function cabang()
 	{
-		return $this->belongsTo(Alat::class, 'id_alat');
+		return $this->belongsTo(Cabang::class, 'id_cabang');
 	}
 
 	public function customer()
@@ -91,11 +87,6 @@ class Service extends Model
 		return $this->belongsTo(Operator::class, 'id_operator');
 	}
 
-	public function teknisi()
-	{
-		return $this->belongsTo(Teknisi::class, 'id_teknisi');
-	}
-
 	public function pemasukans()
 	{
 		return $this->hasMany(Pemasukan::class, 'id_service');
@@ -106,10 +97,24 @@ class Service extends Model
 		return $this->hasMany(Pembayaran::class, 'id_service');
 	}
 
+	public function alats()
+	{
+		return $this->belongsToMany(Alat::class, 'service_alat', 'id_service', 'id_alat')
+					->withPivot('id')
+					->withTimestamps();
+	}
+
 	public function spareparts()
 	{
 		return $this->belongsToMany(Sparepart::class, 'service_sparepart', 'id_service', 'id_sparepart')
 					->withPivot('id', 'jumlah', 'harga_satuan', 'subtotal')
+					->withTimestamps();
+	}
+
+	public function teknisis()
+	{
+		return $this->belongsToMany(Teknisi::class, 'service_teknisi', 'id_service', 'id_teknisi')
+					->withPivot('id')
 					->withTimestamps();
 	}
 }

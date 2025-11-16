@@ -22,8 +22,9 @@ class CabangController extends Controller
         $validated = $request->validate([
             'nama_cabang' => 'required|string',
             'no_telp' => 'required|integer',
-            'alamat' => 'required|string',
+            'provinsi' => 'required|string',
             'kota' => 'required|string',
+            'alamat' => 'required|string',
             'email' => 'required|email',
             'foto' => 'nullable|string',
             'status' => 'required|string',
@@ -41,8 +42,9 @@ class CabangController extends Controller
         $validated = $request->validate([
             'nama_cabang' => 'sometimes|required|string',
             'no_telp' => 'sometimes|required|integer',
-            'alamat' => 'sometimes|required|string',
+            'provinsi' => 'sometimes|required|string',
             'kota' => 'sometimes|required|string',
+            'alamat' => 'sometimes|required|string',
             'email' => 'sometimes|required|email',
             'foto' => 'nullable|string',
             'status' => 'sometimes|required|string',

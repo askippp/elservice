@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $nama
  * @property string $no_telp
  * @property string $alamat
+ * @property string|null $provinsi
+ * @property string|null $kota
  * @property string $email
  * @property string|null $foto
  * @property Carbon|null $created_at
@@ -41,6 +43,8 @@ class Customer extends Model
 		'nama',
 		'no_telp',
 		'alamat',
+		'provinsi',
+		'kota',
 		'email',
 		'foto'
 	];

@@ -15,13 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_customer')->constrained('customer')
                 ->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreignId('id_cabang')->constrained('cabang')
+                ->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_operator')->constrained('operator')
                 ->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('id_teknisi')->constrained('teknisi')
-                ->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('id_alat')->constrained('alat')
-                ->restrictOnDelete()->cascadeOnUpdate();
-            $table->enum('jenis_service', ['drop_off', 'on_site']);
             $table->text('alamat_service')->nullable();
             $table->text('keluhan');
             $table->text('diagnosa')->nullable();

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id
  * @property int $id_teknisi
- * @property int $id_operator
+ * @property int|null $id_operator
  * @property int $id_sparepart
  * @property int $jumlah
  * @property string $status
@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Operator $operator
+ * @property Operator|null $operator
  * @property Sparepart $sparepart
  * @property Teknisi $teknisi
  *

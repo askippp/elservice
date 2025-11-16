@@ -14,6 +14,8 @@ class CabangSeeder extends Seeder
             [
                 'nama_cabang' => 'Cabang A',
                 'alamat' => 'Jalan Mawar No.1',
+                'provinsi' => 'Jawa Barat',
+                'kota' => 'Bandung',
                 'no_telp' => '0811111111',
                 'status' => 'aktif',
                 'foto' => null,
@@ -23,6 +25,8 @@ class CabangSeeder extends Seeder
             [
                 'nama_cabang' => 'Cabang B',
                 'alamat' => 'Jalan Melati No.2',
+                'provinsi' => 'DKI Jakarta',
+                'kota' => 'Jakarta Timur',
                 'no_telp' => '0822222222',
                 'status' => 'aktif',
                 'foto' => null,

@@ -69,6 +69,8 @@ class Alat extends Model
 
 	public function services()
 	{
-		return $this->hasMany(Service::class, 'id_alat');
+		return $this->belongsToMany(Service::class, 'service_alat', 'id_alat', 'id_service')
+					->withPivot('id')
+					->withTimestamps();
 	}
 }

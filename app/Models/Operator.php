@@ -14,8 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  * Class Operator
  * 
  * @property int $id
- * @property int $id_user
+ * @property int|null $id_user
  * @property int $id_cabang
+ * @property string $email
  * @property string $nama
  * @property string $no_telp
  * @property string $alamat
@@ -24,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * 
  * @property Cabang $cabang
- * @property User $user
+ * @property User|null $user
  * @property Collection|RequestSparepart[] $request_spareparts
  * @property Collection|Service[] $services
  *

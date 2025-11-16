@@ -61,6 +61,8 @@ class AuthController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'no_telp' => 'required|integer|unique:customer,no_telp',
+            'provinsi' => 'required|string|max:255',
+            'kota' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'username' => 'required|string|max:10',
@@ -80,6 +82,8 @@ class AuthController extends Controller
             'nama' => $request->nama,
             'no_telp' => $request->no_telp,
             'alamat' => $request->alamat,
+            'provinsi' => $request->provinsi,
+            'kota' => $request->kota,
             'email' => $request->email,
         ]);
 

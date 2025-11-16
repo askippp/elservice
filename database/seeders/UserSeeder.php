@@ -38,16 +38,7 @@ class UserSeeder extends Seeder
                 'token' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'username' => 'customer',
-                'email' => 'customer@example.com',
-                'password' => Hash::make('password'),
-                'role' => 'customer',
-                'token' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+            ]
         ]);
     }
 }

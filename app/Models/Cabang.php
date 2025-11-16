@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $nama_cabang
  * @property string $alamat
+ * @property string|null $provinsi
+ * @property string|null $kota
  * @property string $no_telp
  * @property string $status
  * @property string|null $foto
@@ -26,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|Operator[] $operators
  * @property Collection|Pemasukan[] $pemasukans
  * @property Collection|Pengeluaran[] $pengeluarans
+ * @property Collection|Service[] $services
  * @property Collection|Sparepart[] $spareparts
  * @property Collection|Teknisi[] $teknisis
  *
@@ -38,6 +41,8 @@ class Cabang extends Model
 	protected $fillable = [
 		'nama_cabang',
 		'alamat',
+		'provinsi',
+		'kota',
 		'no_telp',
 		'status',
 		'foto'
@@ -63,6 +68,11 @@ class Cabang extends Model
 	public function pengeluarans()
 	{
 		return $this->hasMany(Pengeluaran::class, 'id_cabang');
+	}
+
+	public function services()
+	{
+		return $this->hasMany(Service::class, 'id_cabang');
 	}
 
 	public function spareparts()

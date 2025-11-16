@@ -13,6 +13,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RequestSparepartController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ServiceController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -52,13 +53,21 @@ Route::middleware(['auth:sanctum', 'role:operator'])->group(function () {
     Route::get('/sparepart/request/operator/{id_operator}', [RequestSparepartController::class, 'getRequestByOperator']);
 
     Route::get('/operator/dashboard/service-summary', [DashboardController::class, 'serviceSummary']);
+
+    Route::get('/service/operator/list', [ServiceController::class, 'operatorList']);
+    Route::patch('/service/{id_service}/decision', [ServiceController::class, 'operatorDecision']);
+    Route::patch('/service/{id_service}/total', [ServiceController::class, 'operatorCalculateTotal']);
 });
 
 Route::middleware(['auth:sanctum', 'role:teknisi'])->group(function () {
     Route::post('/sparepart/request/technician', [RequestSparepartController::class, 'setRequestSparepartToOperator']);
     Route::get('/sparepart/request/technician/{id_teknisi}', [RequestSparepartController::class, 'getRequestByTechnician']);
+
+    Route::get('/service/technician/list', [ServiceController::class, 'technicianList']);
+    Route::patch('/service/{id_service}/diagnose', [ServiceController::class, 'technicianDiagnose']);
 });
 
-Route::middleware(['auth:sanctum', 'role:operator'])->group(function () {
-    
+Route::middleware(['auth:sanctum', 'role:customer'])->group(function () {
+    Route::post('/service/customer/request', [ServiceController::class, 'customerRequest']);
+    Route::post('/service/{id_service}/pay', [ServiceController::class, 'customerPay']);
 });
