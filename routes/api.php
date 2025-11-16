@@ -20,6 +20,9 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
+    
+    Route::get('/profile', [UserController::class, 'show']);
+    Route::patch('/profile', [UserController::class, 'updateProfile']);
 });
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {

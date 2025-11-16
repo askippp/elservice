@@ -104,4 +104,51 @@ class UserController extends Controller
             ], 200);
         });
     }
+
+    public function show(Request $request)
+    {
+        return $request->user();
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'username' => ['sometimes','string', Rule::unique('users','username')->ignore($user->id)],
+            'email'    => ['sometimes','email', Rule::unique('users','email')->ignore($user->id)],
+            'old_password' => ['sometimes','string'],
+            'new_password' => ['sometimes','string','min:6'],
+            'confirm_password' => ['sometimes','string','same:new_password'],
+        ]);
+
+        // Jika ingin ubah password, wajib cek old_password benar
+        if ($request->filled('new_password')) {
+            if (!$request->filled('old_password') || !Hash::check($request->old_password, $user->password)) {
+                return response()->json([
+                    'message' => 'Password lama tidak sesuai',
+                ], 422);
+            }
+        }
+
+        $update = [];
+        if ($request->filled('username')) {
+            $update['username'] = $validated['username'];
+        }
+        if ($request->filled('email')) {
+            $update['email'] = $validated['email'];
+        }
+        if ($request->filled('new_password')) {
+            $update['password'] = Hash::make($validated['new_password']);
+        }
+
+        if (!empty($update)) {
+            $user->update($update);
+        }
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+            'user' => $user->fresh(),
+        ], 200);
+    }
 }

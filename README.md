@@ -1,61 +1,254 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# [NAMA PROYEK API]
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> API berbasis Laravel untuk manajemen entitas (merek, kategori, alat, sparepart, cabang, operator, teknisi, user) lengkap dengan autentikasi menggunakan Laravel Sanctum.
 
-## About Laravel
+## Ringkasan
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Repository ini berisi source code API yang dibangun dengan Laravel 12 (PHP >= 8.2) dengan autentikasi token via Sanctum. Proyek mencakup modular controller, validasi, seeding contoh data, dan konfigurasi testing menggunakan SQLite in-memory.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Autentikasi**: Login, Logout, Register (customer) menggunakan Sanctum.
+- **Manajemen Profil**: Lihat dan update profil user (ganti password dengan verifikasi password lama).
+- **Manajemen Master Data**: CRUD untuk Merek, Kategori, Alat, Sparepart, Cabang, Operator, Teknisi.
+- **Manajemen User (Admin)**: Buat, listing, update, hapus user terhubung ke Operator/Teknisi.
+- **Laporan**: Endpoint rekap pemasukan, pengeluaran, selisih.
+- **Request Sparepart**: Alur approval/reject request sparepart dari operator.
+- **Dashboard**: Ringkasan service untuk admin.
 
-## Learning Laravel
+## Teknologi yang Digunakan
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP ^8.2
+- Laravel ^12.0
+- Laravel Sanctum ^4.2
+- PHPUnit ^11 (testing)
+- Laravel Pint (code style)
+- Composer, Artisan CLI
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Struktur Folder Penting (Ringkas)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+app/
+  Http/Controllers/        # Controller API
+config/
+database/
+  migrations/              # Migrasi database
+  seeders/                 # Seeder sample data
+routes/
+  api.php                  # Definisi endpoint API
+  web.php
+phpunit.xml                # Konfigurasi test (SQLite in-memory)
+composer.json              # Dependensi & scripts
+```
 
-## Laravel Sponsors
+## Instalasi & Setup
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1) Clone repository
 
-### Premium Partners
+```bash
+git clone <URL_REPO>
+cd <nama-folder-repo>
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+2) Install dependency PHP
 
-## Contributing
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3) Siapkan environment
 
-## Code of Conduct
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4) Konfigurasi database di `.env`
 
-## Security Vulnerabilities
+Contoh MySQL:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=elservice
+DB_USERNAME=root
+DB_PASSWORD=secret
+```
 
-## License
+5) Migrasi & seeding
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan migrate --force
+php artisan db:seed
+```
+
+Opsional SQLite lokal:
+
+```bash
+touch database/database.sqlite
+# ubah .env -> DB_CONNECTION=sqlite dan DB_DATABASE=/absolute/path/database/database.sqlite
+php artisan migrate --force
+php artisan db:seed
+```
+
+## Menjalankan Server
+
+```bash
+php artisan serve
+```
+
+Server default: http://127.0.0.1:8000
+
+## Dokumentasi Endpoint
+
+Semua endpoint berada di prefix `/api`. Autentikasi menggunakan header `Authorization: Bearer <token>` untuk endpoint yang membutuhkan.
+
+### Auth
+
+| Method | Path | Auth | Deskripsi |
+|-------|------|------|-----------|
+| POST | /api/login | - | Login dan mendapatkan token |
+| POST | /api/register | - | Registrasi customer |
+| GET | /api/logout | Bearer | Logout (revoke current token) |
+
+Contoh Request Login:
+
+```http
+POST /api/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "secret123"
+}
+```
+
+Contoh Response Login (200):
+
+```json
+{
+  "message": "Login sukses",
+  "token": "<sanctum_token>",
+  "user": { "id": 1, "email": "user@example.com", "username": "john" },
+  "role": "admin",
+  "detail": { }
+}
+```
+
+### Profil
+
+| Method | Path | Auth | Deskripsi |
+|-------|------|------|-----------|
+| GET | /api/profile | Bearer | Mendapatkan profil user saat ini |
+| PATCH | /api/profile | Bearer | Update profil (username/email/password) |
+
+Contoh Request Update Password:
+
+```http
+PATCH /api/profile
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "old_password": "secret123",
+  "new_password": "newSecret123",
+  "confirm_password": "newSecret123"
+}
+```
+
+Contoh Response (200):
+
+```json
+{
+  "message": "Profile updated successfully",
+  "user": { }
+}
+```
+
+### Admin Only
+
+Grup ini membutuhkan middleware `auth:sanctum` dan `role:admin`.
+
+- Resource CRUD: `merek`, `kategori`, `alat`, `sparepart`, `cabang`, `operator`, `teknisi`
+- Manajemen User: `/api/users`
+- Laporan: `/api/laporan/*`
+- Request Sparepart Admin: `/api/sparepart/request/*`
+- Dashboard: `/api/admin/dashboard/service-summary`
+
+Contoh utama:
+
+| Method | Path |
+|-------|------|
+| GET | /api/merek |
+| POST | /api/merek |
+| GET | /api/merek/{id} |
+| PATCH | /api/merek/{id} |
+| DELETE | /api/merek/{id} |
+
+| Method | Path | Deskripsi |
+|-------|------|-----------|
+| POST | /api/users | Buat user dari operator/teknisi |
+| GET | /api/users | List user (filter `?role=operator|teknisi|admin|customer`) |
+| PATCH | /api/users/{user} | Update sebagian field user |
+| DELETE | /api/users/{user} | Hapus user beserta unlink relasi |
+
+| Method | Path | Deskripsi |
+|-------|------|-----------|
+| GET | /api/laporan/pemasukan | Total pemasukan |
+| GET | /api/laporan/pengeluaran | Total pengeluaran |
+| GET | /api/laporan/selisih | Selisih pemasukan vs pengeluaran |
+
+| Method | Path | Deskripsi |
+|-------|------|-----------|
+| GET | /api/sparepart/request/admin/{id_admin} | Daftar request sparepart dari operator |
+| PATCH | /api/sparepart/request/{id_request}/approve | Approve request |
+| PATCH | /api/sparepart/request/{id_request}/reject | Reject request |
+
+| Method | Path | Deskripsi |
+|-------|------|-----------|
+| GET | /api/admin/dashboard/service-summary | Ringkasan service admin |
+
+## Testing
+
+Konfigurasi `phpunit.xml` menggunakan SQLite in-memory.
+
+Jalankan test:
+
+```bash
+php artisan test
+# atau
+composer test
+```
+
+## Deploy (Opsional)
+
+- Siapkan `.env` produksi (APP_ENV=production, APP_DEBUG=false).
+- Jalankan migrasi dan seeder sesuai kebutuhan: `php artisan migrate --force`.
+- Cache konfigurasi & routes: `php artisan config:cache && php artisan route:cache`.
+- Pastikan permission folder: `storage/` dan `bootstrap/cache` writable oleh user web server.
+- Buat symlink storage: `php artisan storage:link`.
+- Gunakan proses manager (Supervisor / systemd) untuk queue jika diperlukan.
+
+## Catatan Tambahan
+
+- Permission: pastikan `storage/` dan `bootstrap/cache` dapat ditulis (775/recursive atau sesuai policy server).
+- Symlink: `php artisan storage:link` untuk akses file publik.
+- Rate limiting & CORS: atur pada `app/Http/Kernel.php` atau `config/cors.php` sesuai kebutuhan klien.
+- Token: semua endpoint privat gunakan header `Authorization: Bearer <token>`.
+
+## Clean Code & Standar Proyek
+
+- Pisahkan validasi ke Form Request (mis. `UpdateProfileRequest`, `StoreUserRequest`).
+- Gunakan Resource/DTO untuk response konsisten (hindari return model mentah).
+- Centralized error handling via Exception Handler & custom exceptions (422/401/403/404).
+- Service Layer untuk business logic kompleks (AuthService, UserService, RequestSparepartService).
+- Beri nama yang konsisten (snake_case DB, camelCase JSON, bahasa Inggris di kode jika memungkinkan).
+- Terapkan Laravel Pint: `./vendor/bin/pint`.
+- Static analysis (opsional): Larastan.
+- Logging & audit pada operasi kritikal.
+- Tambahkan dokumentasi OpenAPI/Swagger (opsional) untuk API contract.
+
+---
+
+Ganti judul di atas menjadi nama proyek Anda: `[NAMA PROYEK API]`.
